@@ -1,25 +1,48 @@
 "use client";
+
+/**
+ * Home component for the Next.js application.
+ * This component dynamically loads and renders remote components (Button, Card, HeroBanner)
+ * from a Create React App (CRA) hosted on Vercel using Module Federation.
+ */
+
 import { useEffect, useState } from "react";
 import { loadRemote } from "../utils/loadRemote";
 
 export default function Home() {
+  /**
+   * State variables to hold the dynamically loaded remote components.
+   * - RemoteButton: Holds the Button component loaded from the remote app.
+   * - RemoteCard: Holds the Card component loaded from the remote app.
+   * - RemoteHeroBanner: Holds the HeroBanner component loaded from the remote app.
+   */
   const [RemoteButton, setRemoteButton] = useState(null);
   const [RemoteCard, setRemoteCard] = useState(null);
   const [RemoteHeroBanner, setRemoteHeroBanner] = useState(null);
 
   useEffect(() => {
-    // Load Button
+    /**
+     * Dynamically loads the remote Button component from the remote app.
+     * The remote app is hosted on Vercel, and the component is exposed via Module Federation.
+     */
     loadRemote(
       "https://react-app-bsw.vercel.app/remoteEntry.js",
       "remoteApp",
       "./Button"
     ).then((mod) => setRemoteButton(() => mod.default));
-    // Load Card
+
+    /**
+     * Dynamically loads the remote Card component from the remote app.
+     */
     loadRemote(
       "https://react-app-bsw.vercel.app/remoteEntry.js",
       "remoteApp",
       "./Card"
     ).then((mod) => setRemoteCard(() => mod.default));
+
+    /**
+     * Dynamically loads the remote HeroBanner component from the remote app.
+     */
     loadRemote(
       "https://react-app-bsw.vercel.app/remoteEntry.js",
       "remoteApp",
